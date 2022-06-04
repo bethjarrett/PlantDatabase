@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PlantDatabase.Models.Water_DateDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Watering Dates</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Day Watered</th>
+            <th scope="col">Plant Watered</th>
+        </tr>
+    </thead>
+    @foreach (var water_date in Model)
+    {
+     <tbody>   
+        <tr>
+            <th scope="row"><a href="/Water_Date/Details/@water_date.water_id">@water_date.water_day.ToString("dd/MMMM")</a></th>
+            <td><a href="/Plant/Details/@water_date.plant_id">@water_date.plant_name</a></td>
+        </tr>
+     </tbody>
+    }
+</table>
+
+<a href="/Water_Date/New">New Watering</a>

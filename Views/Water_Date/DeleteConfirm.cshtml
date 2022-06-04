@@ -1,0 +1,14 @@
+﻿@model PlantDatabase.Models.Water_DateDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure that you want to delete</h2>
+    <h3><strong>@Model.water_day.ToString("dd/MMMM")</strong> for <strong>@Model.plant_name</strong>?</h3>
+<p>This action cannot be undone.</p>
+
+<form method="post" action="/Water_Date/Delete/@Model.water_id">
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a href="/Water_Date/Details/@Model.water_id">Cancel</a>
+</form>

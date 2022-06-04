@@ -1,0 +1,13 @@
+﻿@model PlantDatabase.Models.PlantDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure that you want to delete <b>@Model.plant_name</b>?</h2>
+<p>This action cannot be undone.</p>
+
+<form method="post" action="/Plant/Delete/@Model.plant_id">
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a href="/Plant/Details/@Model.plant_id">Cancel</a>
+</form>
