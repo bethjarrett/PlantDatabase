@@ -1,19 +1,22 @@
 ﻿@model PlantDatabase.Models.Water_DateDto
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Date Details";
 }
-
-<h2>Water Date Details</h2>
-<table class="table">
-    <tr>
-        <th scope="col">water date</th>
-        <th scope="col">plant</th>
-    </tr>
-    <tr>
-        <th scope="row">@Model.water_day.ToString("dd/MMMM")</th>
-        <td><a href="/Plant/Details/@Model.plant_id">@Model.plant_name</a></td>
-    </tr>
-</table>
-<a href="/Water_Date/Edit/@Model.water_id">Update</a>
-<a href="/Water_Date/DeleteConfirm/@Model.water_id">Delete</a>
+<h2>&nbsp;&nbsp;Details</h2>
+<div class="form-field">
+    <div class="table-pad">
+        <table class="table">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Plant</th>
+            </tr>
+            <tr>
+                <th scope="row" class="col-form-label">@Model.water_day.ToString("dd/MMMM")</th>
+                <td><a href="/Plant/Details/@Model.plant_id" class="plant-link">@Model.plant_name</a></td>
+            </tr>
+        </table>
+        <a href="/Water_Date/Edit/@Model.water_id" class="btn">Update</a>&nbsp;&nbsp;
+        <a href="/Water_Date/DeleteConfirm/@Model.water_id" class="btn">Delete</a>
+    </div>
+</div>

@@ -1,20 +1,19 @@
 ﻿@model IEnumerable<PlantDatabase.Models.PlantDto>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Plant List";
 }
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col"><h2>Plants</h2></th>
-        </tr>
-    </thead>
-    @foreach (var plant in Model)
-    {
-        <tr>
-            <td><a href="/Plant/Details/@plant.plant_id">@plant.plant_name</a></td>
-        </tr>
-    }
-</table>
-
-<a href="/Plant/New">New Plant</a>
+<h2>&nbsp;&nbsp;Plants</h2>
+<div class="form-field">
+    <div class="table-pad">
+        <table class="table table-hover">
+            @foreach (var plant in Model)
+            {
+                <tr>
+                    <td><a href="/Plant/Details/@plant.plant_id" class="plant-link">@plant.plant_name</a></td>
+                </tr>
+            }
+        </table>
+        <a href="/Plant/New" class="btn">Add New Plant</a>
+    </div>
+</div>

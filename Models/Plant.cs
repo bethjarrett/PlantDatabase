@@ -14,6 +14,8 @@ namespace PlantDatabase.Models
         public int plant_water { get; set; }
         public int plant_humidity { get; set; }
         public int plant_light { get; set; }
+        public bool planthaspic { get; set; }
+        public string PicExtension { get; set; }
     }
     public class PlantDto
     {
@@ -22,5 +24,7 @@ namespace PlantDatabase.Models
         public int plant_water { get; set; }
         public int plant_humidity { get; set; }
         public int plant_light { get; set; }
+        public bool planthaspic { get; set; }
+        public string PicExtension { get; set; }
     }
 }

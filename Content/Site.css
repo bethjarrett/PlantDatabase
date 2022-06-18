@@ -1,24 +1,141 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
+﻿@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Secular+One&display=swap');
+/*DEFAULT STYLES*/
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
-
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+}
+/*PAGE STYLES*/
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: 'Secular One', sans-serif;
+    font-size: 2em;
+    color: #000;
+    background-color: #faf3dd !important;
+}
+h1 {
+    font-family: 'Fredoka One';
+}
+h2 {
+    font-family: 'Fredoka One';
+    font-size: 2em;
+    margin-bottom: -10px;
+}
+h3 {
+    color: #000;
+}
+hr {
+    border-top: 2px double #C8D5B9;
+}
+.plant-link {
+    color: #68B0AB;
+}
+
+a.plant-link:hover {
+    color: #000;
+}
+.table-pad {
+    padding-left: 4em;
+    padding-right: 4em;
+}
+/*INDEX*/
+.site-name {
+    color: #FFF !important;
+    font-family: 'Fredoka One';
+    font-size: 5em !important;
+    text-shadow: 2px 2px #000;
+}
+.site-subtitle {
+    color: #FFF;
+    margin-top: -10px;
+    text-shadow: 2px 2px #000;
+}
+.jumbotron {
+    background-image: url("/Content/Images/Site/plants2.jpg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.main-emoji {
+    font-size: 4em;
+    float: right;
+}
+.warning {
+    color: #CB341D;
+}
+.blurb-description {
+    font-size: 0.9em;
+}
+/*DETAILS*/
+.plant-pic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+}
+.plant-pic-pad {
+    padding: 2em;
+}
+.details-table {
+    text-align: center;
+}
+.details-table-label {
+    font-family: 'Fredoka One';
+    font-size: 1em;
+}
+.details {
+    font-family: 'Fredoka One';
+    font-size: 1.25em;
+    margin-bottom: -8px;
+}
+/*NAV BAR STYLES*/
+.navbar {
+    background-color: #68B0AB !important;
+}
+.nav > li > a {
+    color:black !important;
+}
+.nav > li > a:active {
+    color: #faf3dd !important;
+    background-color: #68B0AB;
+}
+.nav > li > a:hover {
+    color: #faf3dd !important;
+    background-color: #68B0AB;
+}
+/*FORM STYLES*/
+.form-field {
+    background-color: #C8D5B9;
+    color: white;
+    padding: 2em;
+    border-radius: 20px;
+}
+.form-control {
+    background-color: #faf3dd;
+    color: #000;
+    font-size: 0.8em;
+}
+.col-form-label {
+    color: #000;
+}
+/*BUTTON STYLES*/
+.btn, a.btn {
+    background-color: #68B0AB;
+    color: #fff;
+    font-family: 'Fredoka One';
+    font-size: 0.85em;
+}
+btn:hover, a.btn:hover, .btn:hover {
+    background: #4A7C59;
+    color: #fff;
+}
+.warning-button {
+    background-color: #CB341D;
 }

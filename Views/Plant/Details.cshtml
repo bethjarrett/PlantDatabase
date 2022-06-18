@@ -1,92 +1,93 @@
 ﻿@model PlantDatabase.Models.ViewModels.DetailsPlant
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = @Model.selectedplant.plant_name;
 }
+<h2>&nbsp;&nbsp;@Model.selectedplant.plant_name</h2>
+<div class="form-field">
+    @{
+        string imageurl = "/Content/Images/Plants/default.jpg";
+        if (Model.selectedplant.planthaspic)
+        {
+            imageurl = "/Content/Images/Plants/" + Model.selectedplant.plant_id + "." + Model.selectedplant.PicExtension;
+        }
+    }
+    <div class="plant-pic-pad">
+        <img class="img-thumbnail plant-pic" alt="@Model.selectedplant.plant_name" src="@imageurl" />
+    </div>
+    <div class="table-pad">
+        <table class="table details-table">
+            <tr>
+                <td class="details-table-label">&#128167; Water when:</td>
+                <td class="details-table-label">&#9832;&#65039; Preference:</td>
+                <td class="details-table-label">&#9728;&#65039; Needs:</td>
+            </tr>
+            <tr>
+                @if (@Model.selectedplant.plant_water == 1)
+                {
+                    <td class="col-form-label">Almost Dry</td>
+                }
+                else if (@Model.selectedplant.plant_water == 2)
+                {
+                    <td class="col-form-label">Mostly Dry</td>
+                }
+                else if (@Model.selectedplant.plant_water == 3)
+                {
+                    <td class="col-form-label">Fully Dry</td>
+                }
+                else
+                {
+                    <td>ERROR</td>
+                }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"><h2>@Model.selectedplant.plant_name</h2></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">humidity preference:</th>
-            @if (@Model.selectedplant.plant_humidity == 1)
-            {
-                <td>High Humidity</td>
-            }
-            else if (@Model.selectedplant.plant_humidity == 2)
-            {
-                <td>Medium Humidity</td>
-            }
-            else if (@Model.selectedplant.plant_humidity == 3)
-            {
-                <td>Any</td>
-            }
-            else
-            {
-                <td>ERROR</td>
-            }
-        </tr>
-        <tr>
-            <th scope="row">light needs:</th>
-            @if (@Model.selectedplant.plant_light == 1)
-            {
-                <td>Bright</td>
-            }
-            else if (@Model.selectedplant.plant_light == 2)
-            {
-                <td>Medium</td>
-            }
-            else if (@Model.selectedplant.plant_light == 3)
-            {
-                <td>Low</td>
-            }
-            else
-            {
-                <td>ERROR</td>
-            }
-        </tr>
-        <tr>
-            <th scope="row">water when soil is:</th>
-            @if (@Model.selectedplant.plant_water == 1)
-            {
-                <td>Almost Dry</td>
-            }
-            else if (@Model.selectedplant.plant_water == 2)
-            {
-                <td>Mostly Dry</td>
-            }
-            else if (@Model.selectedplant.plant_water == 3)
-            {
-                <td>Fully Dry</td>
-            }
-            else
-            {
-                <td>ERROR</td>
-            }
-        </tr>
-    </tbody>
-</table>
+                @if (@Model.selectedplant.plant_humidity == 1)
+                {
+                    <td class="col-form-label">High Humidity</td>
+                }
+                else if (@Model.selectedplant.plant_humidity == 2)
+                {
+                    <td class="col-form-label">Medium Humidity</td>
+                }
+                else if (@Model.selectedplant.plant_humidity == 3)
+                {
+                    <td class="col-form-label">Any</td>
+                }
+                else
+                {
+                    <td>ERROR</td>
+                }
 
-<table class="table">
-        <tr>
-            <th scope="col">days watered:</th>
-        </tr>
-        <tbody>
-            @foreach (var water_date in Model.RelatedWater_Date)
-            {
+                @if (@Model.selectedplant.plant_light == 1)
+                {
+                    <td class="col-form-label">Bright Light</td>
+                }
+                else if (@Model.selectedplant.plant_light == 2)
+                {
+                    <td class="col-form-label">Medium Light</td>
+                }
+                else if (@Model.selectedplant.plant_light == 3)
+                {
+                    <td class="col-form-label">Low Light</td>
+                }
+                else
+                {
+                    <td>ERROR</td>
+                }
+            </tr>
+        </table>
+        <h4 class="details">&nbsp;Days Watered</h4>
+        <div class="table-responsive">
+            <table class="table">
                 <tr>
-                    <td scope="row"><a href="/Water_Date/Details/@water_date.water_id">@water_date.water_day.ToString("dd/MMMM")</a></td>
+                    @foreach (var water_date in Model.RelatedWater_Date)
+                    {
+                        <td><a href="/Water_Date/Details/@water_date.water_id" class="plant-link">@water_date.water_day.ToString("dd/MMMM")</a></td>
+                    }
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr><td><a href="/Water_Date/New">Add New Watering</a></td></tr>
-        </tfoot>
-</table>
-<a href="/Plant/Edit/@Model.selectedplant.plant_id">Update</a>
-
-<a href="/Plant/DeleteConfirm/@Model.selectedplant.plant_id">Delete</a>
+            </table>
+        </div>
+        <a href="/Water_Date/New" class="btn">&#128166; Add Watering</a>&nbsp;&nbsp;
+        <a href="/Plant/Edit/@Model.selectedplant.plant_id" class="btn">Update</a>&nbsp;&nbsp;
+        <a href="/Plant/DeleteConfirm/@Model.selectedplant.plant_id" class="btn">Delete</a>
+    </div>
+</div>

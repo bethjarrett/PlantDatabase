@@ -1,13 +1,16 @@
 ﻿@model PlantDatabase.Models.PlantDto
 
 @{
-    ViewBag.Title = "DeleteConfirm";
+    ViewBag.Title = "Delete?";
 }
-
-<h2>Are you sure that you want to delete <b>@Model.plant_name</b>?</h2>
-<p>This action cannot be undone.</p>
-
-<form method="post" action="/Plant/Delete/@Model.plant_id">
-    <button type="submit" class="btn btn-danger">Confirm Delete</button>
-    <a href="/Plant/Details/@Model.plant_id">Cancel</a>
-</form>
+<h2>&nbsp;&nbsp;Delete?</h2>
+<div class="form-field">
+    <div class="table-pad">
+        <h3>Are you sure that you want to delete <b>@Model.plant_name</b>?</h3>
+        <p class="warning">This action cannot be undone.</p>
+        <form method="post" action="/Plant/Delete/@Model.plant_id">
+            <button type="submit" class="btn warning-button">Confirm Delete</button>
+            <a href="/Plant/Details/@Model.plant_id" class="btn">Cancel</a>
+        </form>
+    </div>
+</div>

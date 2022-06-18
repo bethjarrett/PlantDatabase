@@ -22,6 +22,7 @@ namespace PlantDatabase.Controllers
         }
 
         // GET: Water_Date/List
+        // objective: communicate with water_date data api to retrieve list of water_dates
         public ActionResult List()
         {
             string url = "water_datedata/listwater_dates";
@@ -33,6 +34,7 @@ namespace PlantDatabase.Controllers
         }
 
         // GET: Water_Date/Details/5
+        // objective: communicate with water_date data api to retrieve one water_date
         public ActionResult Details(int id)
         {
             string url = "water_datedata/findwater_date/" + id;
@@ -55,6 +57,7 @@ namespace PlantDatabase.Controllers
         }
 
         // POST: Water_Date/Create
+        // objective: add new water_date into system using api
         [HttpPost]
         public ActionResult Create(Water_Date water_date)
         {
@@ -78,6 +81,7 @@ namespace PlantDatabase.Controllers
         }
 
         // GET: Water_Date/Edit/5
+        // objective: get existing selected water_date data to edit
         public ActionResult Edit(int id)
         {
             UpdateWater_Date ViewModel = new UpdateWater_Date();

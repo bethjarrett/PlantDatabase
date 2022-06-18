@@ -1,47 +1,44 @@
 ﻿@model PlantDatabase.Models.ViewModels.UpdateWater_Date
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Date";
 }
-
-<h2>Edit Date</h2>
-
-<form method="POST" action="/Water_Date/Update/@Model.selectedwater_date.water_id">
-    @* Pass through ID *@
-    <div style="display:none;">
-        <input type="text" name="water_id" value="@Model.selectedwater_date.water_id" />
+<h2>&nbsp;&nbsp;Edit Date</h2>
+<div class="form-field">
+    <div class="table-pad">
+        <form method="POST" action="/Water_Date/Update/@Model.selectedwater_date.water_id">
+            @* Pass through ID *@
+            <div style="display:none;">
+                <input type="text" name="water_id" value="@Model.selectedwater_date.water_id" />
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Plant:</label>
+                <div class="col-sm-10">
+                    <select name="plant_id" class="form-control">
+                        @foreach (var plant in Model.PlantOptions)
+                        {
+                            string selected = "";
+                            if (plant.plant_id == Model.selectedwater_date.plant_id)
+                            {
+                                selected = "selected";
+                            }
+                            <option value="@plant.plant_id" @selected>@plant.plant_name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Water Date:</label>
+                <div class="col-sm-10">
+                    <input type="date" name="water_day" value="@Model.selectedwater_date.water_day.ToString("yyyy/MM/dd")" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input type="submit" value="Update" class="btn" />&nbsp;&nbsp;
+                    <a href="/Water_Date/Details/@Model.selectedwater_date.water_id" class="btn">Cancel</a>
+                </div>
+            </div>
+        </form>
     </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Plant:</label>
-        <div class="col-sm-10">
-            <select name="plant_id" class="form-control">
-                @foreach (var plant in Model.PlantOptions)
-                {
-                    string selected = "";
-                    if (plant.plant_id == Model.selectedwater_date.plant_id)
-                    {
-                        selected = "selected";
-                    }
-                    <option value="@plant.plant_id" @selected>@plant.plant_name</option>
-                }
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Water Date:</label>
-        <div class="col-sm-10">
-            <input type="date" name="water_day" value="@Model.selectedwater_date.water_day" class="form-control" />
-        </div>
-    </div>
-
-
-    <div class="form-group row">
-        <div class="col-sm-10">
-            <input type="submit" value="Update Water Date" class="btn btn-primary" />
-            <a href="/Water_Date/Details/@Model.selectedwater_date.water_id">Cancel</a>
-        </div>
-    </div>
-
-</form> 
+</div>

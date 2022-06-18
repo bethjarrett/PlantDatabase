@@ -15,15 +15,21 @@ namespace PlantDatabase.Controllers
     public class Water_DateDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: api/Water_DateData/ListWater_Dates
+        /// <summary>
+        /// returns all water dates in database
+        /// </summary>
+        /// <returns>
+        /// all water dates in db
+        /// </returns>
+        /// <example>
+        /// GET: api/Water_DateData/ListWater_Dates
+        /// </example>
         [ResponseType(typeof(Water_DateDto))]
         [HttpGet]
         public IEnumerable<Water_DateDto> ListWater_Dates()
         {
             List<Water_Date> Water_Dates = db.Water_Dates.ToList();
             List<Water_DateDto> Water_DateDtos = new List<Water_DateDto>();
-
             Water_Dates.ForEach(w => Water_DateDtos.Add(new Water_DateDto()
             {
                 water_id = w.water_id,
@@ -32,14 +38,12 @@ namespace PlantDatabase.Controllers
                 plant_name = w.Plant.plant_name
 
             }));
-
             return Water_DateDtos;
-
         }
 
         [ResponseType(typeof(Water_DateDto))]
         [HttpGet]
-        public IHttpActionResult ListWater_DatesForPlants(int id)
+        public IHttpActionResult ListWater_DatesForPlant(int id)
         {
             List<Water_Date> Water_Dates = db.Water_Dates.Where(a => a.plant_id == id).ToList();
             List<Water_DateDto> Water_DateDtos = new List<Water_DateDto>();
@@ -55,8 +59,16 @@ namespace PlantDatabase.Controllers
             return Ok(Water_DateDtos);
         }
 
-
-        // GET: api/Water_DateData/FindWater_Date/5
+        /// <summary>
+        /// returns all water dates in database
+        /// </summary>
+        /// <returns>
+        /// water date in database matching water date ID primary key
+        /// </returns>
+        /// <param name="id">primary key of water date</param>
+        /// <example>
+        /// GET: api/Water_DateData/FindWater_Date/5
+        /// </example>
         [ResponseType(typeof(Water_DateDto))]
         [HttpGet]
         public IHttpActionResult FindWater_Date(int id)
@@ -68,7 +80,6 @@ namespace PlantDatabase.Controllers
                 water_day = Water_Date.water_day,
                 plant_id = Water_Date.Plant.plant_id,
                 plant_name = Water_Date.Plant.plant_name,
-
             };
             if (Water_Date == null)
             {
@@ -77,8 +88,13 @@ namespace PlantDatabase.Controllers
 
             return Ok(Water_DateDto);
         }
-
-        // POST: api/Water_DateData/UpdateWater_Date/5
+        /// <summary>
+        /// receives water date data, updates based on input
+        /// </summary>
+        /// <param name="id">water date id</param>
+        /// <example>
+        /// POST: api/Water_DateData/UpdateWater_Date/5
+        /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateWater_Date(int id, Water_Date water_date)
@@ -92,7 +108,6 @@ namespace PlantDatabase.Controllers
             {
                 return BadRequest();
             }
-
             db.Entry(water_date).State = EntityState.Modified;
 
             try
@@ -110,11 +125,18 @@ namespace PlantDatabase.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-        // POST: api/Water_DateData/AddWater_Date
+        /// <summary>
+        /// adds water date to database
+        /// </summary>
+        /// <param name="water_date">JSON FORM DATA of water date</param>
+        /// <returns>
+        /// water date ID and plant data
+        /// </returns>
+        /// <example>
+        /// POST: api/Water_DateData/AddWater_Date
+        /// </example>
         [ResponseType(typeof(Water_Date))]
         [HttpPost]
         public IHttpActionResult AddWater_Date(Water_Date water_date)
@@ -129,8 +151,13 @@ namespace PlantDatabase.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = water_date.water_id }, water_date);
         }
-
-        // POST: api/Water_DateData/DeleteWater_Date/5
+        /// <summary>
+        /// deletes water date from database by its ID
+        /// </summary>
+        /// <param name="id">primary key of water date</param>
+        /// <example>
+        /// POST: api/Water_DateData/DeleteWater_Date/5
+        /// </example>
         [ResponseType(typeof(Water_Date))]
         [HttpPost]
         public IHttpActionResult DeleteWater_Date(int id)
@@ -146,7 +173,6 @@ namespace PlantDatabase.Controllers
 
             return Ok(water_date);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -155,7 +181,6 @@ namespace PlantDatabase.Controllers
             }
             base.Dispose(disposing);
         }
-
         private bool Water_DateExists(int id)
         {
             return db.Water_Dates.Count(e => e.water_id == id) > 0;

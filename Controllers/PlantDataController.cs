@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,8 +17,15 @@ namespace PlantDatabase.Controllers
     public class PlantDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: api/PlantData/ListPlants
+        /// <summary>
+        /// returns all plants in database
+        /// </summary>
+        /// <returns>
+        /// all plants in db, including their water dates
+        /// </returns>
+        /// <example>
+        /// GET: api/PlantData/ListPlants
+        /// </example>
         [HttpGet]
         public IEnumerable<PlantDto> ListPlants()
         {
@@ -30,12 +39,21 @@ namespace PlantDatabase.Controllers
                 plant_humidity = p.plant_humidity,
                 plant_light = p.plant_light,
                 plant_water = p.plant_water,
+                planthaspic = p.planthaspic,
+                PicExtension = p.PicExtension,
             }));
-
             return PlantDtos;
         }
-
-        // GET: api/PlantData/FindPlant/5
+        /// <summary>
+        /// returns all plants in database
+        /// </summary>
+        /// <returns>
+        /// plant in database matching plant ID primary key
+        /// </returns>
+        /// <param name="id">primary key of plant</param>
+        /// <example>
+        /// GET: api/PlantData/FindPlant/5
+        /// </example>
         [ResponseType(typeof(PlantDto))]
         [HttpGet]
         public IHttpActionResult FindPlant(int id)
@@ -48,6 +66,8 @@ namespace PlantDatabase.Controllers
                 plant_humidity = Plant.plant_humidity,
                 plant_light = Plant.plant_light,
                 plant_water = Plant.plant_water,
+                planthaspic = Plant.planthaspic,
+                PicExtension= Plant.PicExtension,
             };
             if (Plant == null)
             {
@@ -56,7 +76,13 @@ namespace PlantDatabase.Controllers
             return Ok(PlantDto);
         }
 
-        // POST: api/PlantData/UpdatePlant/5
+        /// <summary>
+        /// receives plant picture data, uploads it, updates plant's HasPic
+        /// </summary>
+        /// <param name="id">plant id</param>
+        /// <example>
+        /// POST: api/PlantData/UpdatePlantPic/3
+        /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdatePlant(int id, Plant plant)
@@ -70,6 +96,8 @@ namespace PlantDatabase.Controllers
                 return BadRequest();
             }
             db.Entry(plant).State = EntityState.Modified;
+            db.Entry(plant).Property(a => a.planthaspic).IsModified = false;
+            db.Entry(plant).Property(a => a.PicExtension).IsModified = false;
             try
             {
                 db.SaveChanges();
@@ -87,8 +115,60 @@ namespace PlantDatabase.Controllers
             }
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-        // POST: api/PlantData/AddPlant
+        [HttpPost]
+        public IHttpActionResult UploadPlantPic(int id)
+        {
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var plantPic = HttpContext.Current.Request.Files[0];
+                    if (plantPic.ContentLength > 0)
+                    {
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(plantPic.FileName).Substring(1);
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                string fn = id + "." + extension;
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Plants/"), fn);
+                                plantPic.SaveAs(path);
+                                haspic = true;
+                                picextension = extension;
+                                Plant Selectedplant = db.Plants.Find(id);
+                                Selectedplant.planthaspic = haspic;
+                                Selectedplant.PicExtension = extension;
+                                db.Entry(Selectedplant).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                return BadRequest();
+                            }
+                        }
+                    }
+                }
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        /// <summary>
+        /// adds plant to database
+        /// </summary>
+        /// <param name="plant">JSON FORM DATA of plant</param>
+        /// <returns>
+        /// plant ID and plant data
+        /// </returns>
+        /// <example>
+        /// POST: api/PlantData/AddPlant
+        /// </example>
         [ResponseType(typeof(Plant))]
         [HttpPost]
         public IHttpActionResult AddPlant(Plant plant)
@@ -102,8 +182,13 @@ namespace PlantDatabase.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = plant.plant_id }, plant);
         }
-
-        // POST: api/PlantData/DeletePlant/5
+        /// <summary>
+        /// deletes plant from database by its ID
+        /// </summary>
+        /// <param name="id">primary key of plant</param>
+        /// <example>
+        /// POST: api/PlantData/DeletePlant/5
+        /// </example>
         [ResponseType(typeof(Plant))]
         [HttpPost]
         public IHttpActionResult DeletePlant(int id)
@@ -119,7 +204,6 @@ namespace PlantDatabase.Controllers
 
             return Ok(plant);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -128,7 +212,6 @@ namespace PlantDatabase.Controllers
             }
             base.Dispose(disposing);
         }
-
         private bool PlantExists(int id)
         {
             return db.Plants.Count(e => e.plant_id == id) > 0;
