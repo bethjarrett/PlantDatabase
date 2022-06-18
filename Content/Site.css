@@ -78,7 +78,7 @@ a.plant-link:hover {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    max-width: 300px;
+    width: 300px;
 }
 .plant-pic-pad {
     padding: 2em;
@@ -138,4 +138,12 @@ btn:hover, a.btn:hover, .btn:hover {
 }
 .warning-button {
     background-color: #CB341D;
+}
+/*MOBILE*/
+@media screen and (max-width:320px) {
+h2 {font-size: 1.3em; margin-bottom: -9px;}
+.site-name {font-size: 3.5em !important;}
+.table-pad {padding: 0}
+.plant-pic-pad {padding: 0}
+.details-table-label, .col-form-label {font-size: 0.8em}
 }
