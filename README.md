@@ -1,4 +1,5 @@
 # Plant Database - The Foliage Folio
+https://www.youtube.com/watch?v=RdAspJjqeQ0
 A web application that allows users to manage a database of their plants and track when they water them.
 
 # About Project
